@@ -14,6 +14,7 @@
 
 @property (nonatomic) PhotoCollection *photoCollection;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortBySegmentedControl;
 
 @end
 
@@ -26,7 +27,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.photoCollection = [[PhotoCollection alloc] init];
-    [self.photoCollection sortBySubject];
+    
     
     
     
@@ -42,19 +43,21 @@
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return self.photoCollection.photos.count;
 }
+
+
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.photoCollection.photos.count;
+    return self.photoCollection.photos[self.photoCollection.photosKeys[section]].count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PhotoCollectionViewCell *newCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
     
-    newCell.photo = self.photoCollection.photos[indexPath.row];
+    newCell.photo = self.photoCollection.photos[self.photoCollection.photosKeys[indexPath.section]][indexPath.item];
     newCell.backgroundColor = [UIColor redColor];
     
     
@@ -85,7 +88,8 @@
     
 - (IBAction)sortSelectorChanged:(UISegmentedControl *)sender {
     
-    
+    NSMutableDictionary <NSString*,NSMutableArray<Photo*>*> *temp = self.photoCollection.photos;
+    NSMutableArray *tempKeys = self.photoCollection.photosKeys;
     
     
     switch (sender.selectedSegmentIndex) {
@@ -104,8 +108,54 @@
             break;
     }
 
+//        [self.collectionView reloadData];
+
     
-    [self.collectionView reloadData];
+    
+    
+    
+    [self.collectionView performBatchUpdates:^{
+        for (int i = 0; i<tempKeys.count; i++)
+        {
+            for(int j = 0; j<temp[tempKeys[i]].count; j++)
+                {
+                    NSIndexPath *fromIndexPath = [NSIndexPath indexPathForItem:j inSection:i];
+                    NSIndexPath *toIndexPath = [[NSIndexPath alloc] init];
+                    
+                    BOOL loop = YES;
+                    
+                    for (int k = 0; k<self.photoCollection.photosKeys.count && loop; k++)
+                    {
+                        for(int l = 0; l<self.photoCollection.photos[self.photoCollection.photosKeys[k]].count; l++)
+                        {
+                            if([self.photoCollection.photos[self.photoCollection.photosKeys[k]][l] isEqual:temp[tempKeys[i]][j]])
+                            {
+                                toIndexPath = [NSIndexPath indexPathForItem:l inSection:k];
+                                loop = NO;
+                                break;
+                            }
+                            
+                        }
+                    }
+                    
+                    if(tempKeys.count>self.photoCollection.photosKeys.count)
+                    {
+                        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.photoCollection.photosKeys.count-1, tempKeys.count - self.photoCollection.photosKeys.count)]];
+                    }
+                    else if(tempKeys.count<self.photoCollection.photosKeys.count)
+                    {
+                        [self.collectionView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(tempKeys.count-1,self.photoCollection.photosKeys.count-tempKeys.count)]];
+                    }
+                    
+                    
+                    [self.collectionView moveItemAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+                }
+            
+        }
+    } completion:^(BOOL finished) {}];
+    
+    
+    
     
 }
     

@@ -14,31 +14,130 @@
 {
     self = [super init];
     if (self) {
-        _photos = [[NSMutableArray alloc] init];
+        _photos = [[NSMutableDictionary alloc] init];
         
         for(NSString *photoName in [self returnPhotoStrings])
         {
-            Photo *photo = [[Photo alloc] initWithPhotoNamed:photoName andLocation:[NSString stringWithFormat:@"%d Location", arc4random_uniform(10)] andSubject:[NSString stringWithFormat:@"%d Subject", arc4random_uniform(10)]];
-            [_photos addObject:photo];
+            Photo *photo = [[Photo alloc] initWithPhotoNamed:photoName andLocation:[NSString stringWithFormat:@"%d Location", arc4random_uniform(6)] andSubject:[NSString stringWithFormat:@"%d Subject", arc4random_uniform(6)]];
+            
+            if(!_photos[photo.subject])
+            {
+                [_photos setObject:[[NSMutableArray alloc] init] forKey:photo.subject];
+            }
+            
+            [_photos[photo.subject] addObject:photo];
         }
+        
+        //Sorts each array by Location after they have been sorted into arrays by Subject
+        for(NSString *key in _photos)
+        {
+            
+            [_photos[key] sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"location" ascending:NO]]];
+            
+        }
+        
+        _photosKeys = [[_photos allKeys] mutableCopy];
+        
+        [self sortKeys];
+        
+        _sortedBy = @"Subject";
         
     }
     return self;
 }
 
+
+
+-(void)sortKeys
+{
+    [_photosKeys sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];
+}
+
 -(void)sortBySubject
 {
-        [self.photos sortUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"subject" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"location" ascending:NO],nil]];
+    NSMutableDictionary *newSortedDictionary= [[NSMutableDictionary alloc] init];
     
-    self.sortedBy = @"Subject";
+    for(NSString *key in _photos)
+    {
+        for(Photo *photo in _photos[key])
+        {
+            
+            if(!newSortedDictionary[photo.subject])
+            {
+                [newSortedDictionary setObject:[[NSMutableArray alloc] init] forKey:photo.subject];
+            }
+        
+            [newSortedDictionary[photo.subject] addObject:photo];
+        
+        
+        }
+    }
+    
+    
+    //Sorts each array by Location after they have been sorted into arrays by Subject
+    for(NSString *key in newSortedDictionary)
+    {
+        
+        [newSortedDictionary[key] sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"location" ascending:NO]]];
+        
+    }
+    
+    
+    
+    
+    
+    _photosKeys = [[newSortedDictionary allKeys] mutableCopy];
+    
+    
+    _photos = newSortedDictionary;
+    
+    [self sortKeys];
+    
+    _sortedBy = @"Subject";
 }
 
 
 -(void)sortByLocation
 {
-    [self.photos sortUsingDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"location" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"subject" ascending:NO],nil]];
+    NSMutableDictionary *newSortedDictionary= [[NSMutableDictionary alloc] init];
     
-    self.sortedBy = @"Location";
+    for(NSString *key in _photos)
+    {
+        for(Photo *photo in _photos[key])
+        {
+            
+            if(!newSortedDictionary[photo.location])
+            {
+                [newSortedDictionary setObject:[[NSMutableArray alloc] init] forKey:photo.location];
+            }
+            
+            [newSortedDictionary[photo.location] addObject:photo];
+            
+            
+        }
+    }
+    
+    
+    //Sorts each array by Location after they have been sorted into arrays by Subject
+    for(NSString *key in newSortedDictionary)
+    {
+        
+        [newSortedDictionary[key] sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"subject" ascending:NO]]];
+        
+    }
+    
+    
+    
+    
+    
+    _photosKeys = [[newSortedDictionary allKeys] mutableCopy];
+    
+    
+    _photos = newSortedDictionary;
+    
+    [self sortKeys];
+    
+    _sortedBy = @"Location";
 }
 
 

@@ -12,6 +12,7 @@
 @interface PhotoCollection : NSObject
 
 @property (nonatomic) NSMutableDictionary <NSString*, NSMutableArray<Photo *>*> *photos;
+@property (nonatomic) NSMutableArray <NSString *> *photosKeys;
 @property (nonatomic) NSString *sortedBy;
 
 -(void)sortBySubject;

@@ -106,6 +106,7 @@
                     <navigationItem key="navigationItem" id="HZK-tW-2k6"/>
                     <connections>
                         <outlet property="collectionView" destination="YsC-jE-DVt" id="afr-3l-ARq"/>
+                        <outlet property="sortBySegmentedControl" destination="fim-59-eLK" id="LJy-4W-QCw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
