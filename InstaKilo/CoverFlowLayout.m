@@ -18,6 +18,7 @@
 @implementation CoverFlowLayout
 
 CGFloat const scaleFactor = 1.5;
+float const unselectedAngle = 50;
 
 -(void)prepareLayout
 {
@@ -40,7 +41,8 @@ CGFloat const scaleFactor = 1.5;
 -(NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     
-    NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
+    NSArray *original = [super layoutAttributesForElementsInRect:rect];
+    NSArray *attributes = [[NSArray alloc] initWithArray:original copyItems:YES];
     
     CGRect visibleRegion;
     visibleRegion.origin = self.collectionView.contentOffset;
@@ -65,7 +67,7 @@ CGFloat const scaleFactor = 1.5;
                     
                     
                     // 0 at x40 -> 45 at x130
-                    float degrees = (-xDist/fabs(xDist)) * (45) * ((fabs(xDist)-40)/(90));
+                    float degrees = (-xDist/fabs(xDist)) * (unselectedAngle) * ((fabs(xDist)-40)/(90));
                     cellAttributes.transform3D = [self Rotate3dByDegrees:degrees];
 
                     
@@ -92,10 +94,10 @@ CGFloat const scaleFactor = 1.5;
                 
                 if(xDist > 0)
                 {
-                    cellAttributes.transform3D = [self Rotate3dByDegrees:-45];
+                    cellAttributes.transform3D = [self Rotate3dByDegrees:-unselectedAngle];
                 }
                 else{
-                    cellAttributes.transform3D = [self Rotate3dByDegrees:45];
+                    cellAttributes.transform3D = [self Rotate3dByDegrees:unselectedAngle];
                 }
                 
                 
@@ -121,7 +123,6 @@ CGFloat const scaleFactor = 1.5;
     rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, degrees * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
     return rotationAndPerspectiveTransform;
 }
-
 
 
 

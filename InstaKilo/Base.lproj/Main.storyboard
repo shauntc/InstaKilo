@@ -52,13 +52,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="huJ-1R-4Ig"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9NZ-mP-KmT">
+                                                    <connections>
+                                                        <segue destination="KoS-rt-9D5" kind="show" identifier="SegueShowDetailsViewButton" id="xg9-9c-Vaq"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="9NZ-mP-KmT" secondAttribute="bottom" id="0Ve-aC-DCX"/>
+                                            <constraint firstItem="9NZ-mP-KmT" firstAttribute="leading" secondItem="KSQ-iP-hot" secondAttribute="leading" id="8dG-kd-EE3"/>
                                             <constraint firstItem="huJ-1R-4Ig" firstAttribute="width" secondItem="KSQ-iP-hot" secondAttribute="width" id="Ea2-bP-ZRL"/>
                                             <constraint firstItem="huJ-1R-4Ig" firstAttribute="centerY" secondItem="KSQ-iP-hot" secondAttribute="centerY" id="Eyk-g7-UAx"/>
                                             <constraint firstItem="huJ-1R-4Ig" firstAttribute="centerX" secondItem="KSQ-iP-hot" secondAttribute="centerX" id="cHH-0t-zkk"/>
                                             <constraint firstItem="huJ-1R-4Ig" firstAttribute="height" secondItem="KSQ-iP-hot" secondAttribute="height" id="nbC-ty-w25"/>
+                                            <constraint firstAttribute="trailing" secondItem="9NZ-mP-KmT" secondAttribute="trailing" id="x9I-il-SG3"/>
+                                            <constraint firstItem="9NZ-mP-KmT" firstAttribute="top" secondItem="KSQ-iP-hot" secondAttribute="top" id="xf1-Nj-Iaz"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="photoImageView" destination="huJ-1R-4Ig" id="AAO-FE-UZH"/>
@@ -182,4 +191,7 @@
             <point key="canvasLocation" x="656.79999999999995" y="155.17241379310346"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xg9-9c-Vaq"/>
+    </inferredMetricsTieBreakers>
 </document>

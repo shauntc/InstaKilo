@@ -18,7 +18,7 @@
         
         for(NSString *photoName in [self returnPhotoStrings])
         {
-            Photo *photo = [[Photo alloc] initWithPhotoNamed:photoName andLocation:[NSString stringWithFormat:@"%d Location", arc4random_uniform(6)] andSubject:[NSString stringWithFormat:@"%d Subject", arc4random_uniform(0)]];
+            Photo *photo = [[Photo alloc] initWithPhotoNamed:photoName andLocation:[NSString stringWithFormat:@"%d Location", arc4random_uniform(4)] andSubject:[NSString stringWithFormat:@"%d Subject", arc4random_uniform(4)]];
             
             if(!_photos[photo.subject])
             {

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "DetailsViewController.h"
+#import "CoverFlowLayout.h"
 
 @interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -28,6 +29,12 @@
     
     self.photoCollection = [[PhotoCollection alloc] init];
     
+    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    
+    [self deviceDidRotate:nil];
     
     
     
@@ -50,6 +57,12 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+
+    if(!self.photoCollection.photos[self.photoCollection.photosKeys[section]].count)
+    {
+        return 0;
+    }
+    
     return self.photoCollection.photos[self.photoCollection.photosKeys[section]].count;
 }
 
@@ -70,7 +83,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([[segue identifier] isEqualToString:@"SegueShowDetailsView"])
+    if([[segue identifier] isEqualToString:@"SegueShowDetailsView"] || [[segue identifier] isEqualToString:@"SegueShowDetailsViewButton"])
     {
         DetailsViewController *nextVC = segue.destinationViewController;
         for( NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems)
@@ -82,19 +95,23 @@
 }
 
 
-#pragma mark - UICollectionViewDelegateFlowLayout methods
+#pragma mark - Notification response
 
 
-//-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CGSize imageSize = self.photoCollection.photos[self.photoCollection.photosKeys[indexPath.section]][indexPath.item].photo.size;
-//    
-//    CGFloat width = 60 * (imageSize.width/imageSize.height);
-//    
-//    CGSize size = CGSizeMake(width, 120);
-//    
-//    return size;
-//}
+
+-(void)deviceDidRotate:(NSNotification *)notification
+{
+    if([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        [self.collectionView setCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    }
+    else if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight)
+    {
+        [self.collectionView setCollectionViewLayout:[[CoverFlowLayout alloc] init]];
+    }
+    
+    
+}
 
 
 
@@ -124,11 +141,22 @@
 
 //        [self.collectionView reloadData];
 
+    if(tempKeys.count>self.photoCollection.photosKeys.count)
+    {
+        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.photoCollection.photosKeys.count-1, tempKeys.count - self.photoCollection.photosKeys.count)]];
+    }
+    if(tempKeys.count<self.photoCollection.photosKeys.count)
+    {
+        [self.collectionView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(tempKeys.count-1,self.photoCollection.photosKeys.count-tempKeys.count)]];
+    }
     
-    
+   
     
     
     [self.collectionView performBatchUpdates:^{
+        
+        
+        
         for (int i = 0; i<tempKeys.count; i++)
         {
             for(int j = 0; j<temp[tempKeys[i]].count; j++)
@@ -152,14 +180,7 @@
                         }
                     }
                     
-                    if(tempKeys.count>self.photoCollection.photosKeys.count)
-                    {
-                        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.photoCollection.photosKeys.count-1, tempKeys.count - self.photoCollection.photosKeys.count)]];
-                    }
-                    else if(tempKeys.count<self.photoCollection.photosKeys.count)
-                    {
-                        [self.collectionView insertSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(tempKeys.count-1,self.photoCollection.photosKeys.count-tempKeys.count)]];
-                    }
+                    
                     
                     
                     [self.collectionView moveItemAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
