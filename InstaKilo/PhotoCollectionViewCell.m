@@ -20,7 +20,7 @@
 //Sets up the Cell Layout/View
 -(void)configureView
 {
-    _photoImageView.image = _photo.photo;
+    _photoImageView.image = [UIImage imageNamed:_photo.photo];
 }
 
 //Photo Setter also Configures the view properties

@@ -11,7 +11,7 @@
 
 @interface Photo : NSObject
 
-@property (nonatomic, readonly) UIImage *photo;
+@property (nonatomic, readonly) NSString *photo;
 @property (nonatomic, readonly) NSString *location;
 @property (nonatomic, readonly) NSString *subject;
 

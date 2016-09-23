@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28C134581D9460C800B851C3 /* CoverFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C134571D9460C800B851C3 /* CoverFlowLayout.m */; };
 		28DAA3BC1D92E65000285FAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA3BB1D92E65000285FAF /* main.m */; };
 		28DAA3BF1D92E65000285FAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA3BE1D92E65000285FAF /* AppDelegate.m */; };
 		28DAA3C21D92E65000285FAF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA3C11D92E65000285FAF /* ViewController.m */; };
@@ -47,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28C134561D9460C800B851C3 /* CoverFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoverFlowLayout.h; sourceTree = "<group>"; };
+		28C134571D9460C800B851C3 /* CoverFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoverFlowLayout.m; sourceTree = "<group>"; };
 		28DAA3B71D92E65000285FAF /* InstaKilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaKilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28DAA3BB1D92E65000285FAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		28DAA3BD1D92E65000285FAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -195,6 +198,8 @@
 				28DAA4171D930FF600285FAF /* CollectionCells */,
 				28DAA4141D930A7A00285FAF /* DetailsViewController.h */,
 				28DAA4151D930A7A00285FAF /* DetailsViewController.m */,
+				28C134561D9460C800B851C3 /* CoverFlowLayout.h */,
+				28C134571D9460C800B851C3 /* CoverFlowLayout.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28DAA3C21D92E65000285FAF /* ViewController.m in Sources */,
+				28C134581D9460C800B851C3 /* CoverFlowLayout.m in Sources */,
 				28DAA4101D92F95900285FAF /* PhotoCollectionViewCell.m in Sources */,
 				28DAA3BF1D92E65000285FAF /* AppDelegate.m in Sources */,
 				28DAA3D31D92F46100285FAF /* PhotoCollection.m in Sources */,
@@ -479,6 +485,7 @@
 				28DAA3D01D92E65000285FAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

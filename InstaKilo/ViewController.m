@@ -82,6 +82,20 @@
 }
 
 
+#pragma mark - UICollectionViewDelegateFlowLayout methods
+
+
+//-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    CGSize imageSize = self.photoCollection.photos[self.photoCollection.photosKeys[indexPath.section]][indexPath.item].photo.size;
+//    
+//    CGFloat width = 60 * (imageSize.width/imageSize.height);
+//    
+//    CGSize size = CGSizeMake(width, 120);
+//    
+//    return size;
+//}
+
 
 
 #pragma mark - Input Methods

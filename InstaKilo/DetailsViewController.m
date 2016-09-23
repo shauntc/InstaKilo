@@ -44,7 +44,7 @@
 
 - (void)configureView
 {
-    _photoImageView.image = _photo.photo;
+    _photoImageView.image = [UIImage imageNamed:_photo.photo];
     _subjectOutputLabel.text = _photo.subject;
     _locationOutputLabel.text = _photo.location;
 }
@@ -79,7 +79,7 @@
 
 -(UIImageView*)setUpImageViewToView:(UIScrollView*)view
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:self.photo.photo];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.photo.photo]];
     
     [view addSubview:imageView];
     imageView.backgroundColor = [UIColor blueColor];

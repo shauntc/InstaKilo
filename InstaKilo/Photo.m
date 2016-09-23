@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        _photo = [UIImage imageNamed:photoName];
+        _photo = photoName;
         _subject = subject;
         _location = location;
     }
