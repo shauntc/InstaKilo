@@ -23,6 +23,7 @@ float const unselectedAngle = 50;
 -(void)prepareLayout
 {
     self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+
     
     self.itemSize = CGSizeMake(200, 200);
     self.sectionInset = UIEdgeInsetsMake(150, 150, 150, 150);

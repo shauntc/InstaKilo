@@ -71,7 +71,7 @@
     PhotoCollectionViewCell *newCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
     
     newCell.photo = self.photoCollection.photos[self.photoCollection.photosKeys[indexPath.section]][indexPath.item];
-    newCell.backgroundColor = [UIColor redColor];
+    newCell.backgroundColor = [UIColor darkGrayColor];
     
     
     
@@ -103,7 +103,12 @@
 {
     if([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown)
     {
-        [self.collectionView setCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+        UICollectionViewFlowLayout *flowLayout =[[UICollectionViewFlowLayout alloc] init];
+        flowLayout.itemSize = CGSizeMake(120, 120);
+        flowLayout.minimumInteritemSpacing = 10;
+        flowLayout.minimumLineSpacing = 10;
+        flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+        [self.collectionView setCollectionViewLayout:flowLayout];
     }
     else if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft || [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight)
     {
